@@ -12,9 +12,9 @@ import java.awt.event.ActionListener;
 
 public class Board {
 
-    private JButton spaces[];
+    private static JButton spaces[];
     private static int turn = 0;
-    private static int[][][] wins;
+    //private static int[][][] wins;
 
     Board(String title, int width, int height) {
         JFrame jf = new JFrame(title);
@@ -22,7 +22,7 @@ public class Board {
 
         JPanel jp = new JPanel();
         jp.setLayout(new GridLayout(width, height));
-        jp.setBorder(BorderFactory.createLineBorder(Color.blue, 3));
+        //jp.setBorder(BorderFactory.createLineBorder(Color.blue, 3));
         spaces = new JButton[width * height];
         for (int i = 0; i < width * height; i++) {
             spaces[i] = new TTTButton();
@@ -33,7 +33,7 @@ public class Board {
         jf.setSize(width * 100, height * 100);
         jf.setVisible(true);
 
-        initWins(width, height);
+        //initWins(width, height);
     }
 
     private static class TTTButton extends JButton implements ActionListener {
@@ -42,6 +42,10 @@ public class Board {
 
         public TTTButton() {
             super();
+            setBackground(Color.ORANGE);
+            setOpaque(true);
+            //setBorderPainted(false);
+            //setBorder(null);
             setFont(new Font("Helvetica", Font.PLAIN, 60));
             setText(" ");
             addActionListener(this);
@@ -54,16 +58,58 @@ public class Board {
             } else if (turn % 2 == 1 && getText().equals(" ")) {
                 setText("O");
             }
-            turn++;
+            if (checkForWin()) {
+                // XXX - Do something sensible.
+            } else {
+                turn++;
+            }
         }
     }
 
-    private static void initWins(int cols, int rows) {
-        /*
+    private static boolean checkForWin() {
+
+        int[][] wins = new int[][] {
+                {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // horizontal wins
+                {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, // vertical wins
+                {0, 4, 8}, {2, 4, 6}			 // diagonal wins
+        };
+        boolean haveWin = false;
+
+        for (int i = 0; i < wins.length; i++) {
+            if ( !spaces[wins[i][0]].getText().equals(" ")
+                    && spaces[wins[i][0]].getText().equals( spaces[wins[i][1]].getText() )
+                    && spaces[wins[i][1]].getText().equals( spaces[wins[i][2]].getText() )
+                    ) {
+                haveWin = true;
+                showWin(i);
+            }
+        }
+        return haveWin;
+    }
+
+    private static void showWin(int win) {
+        System.out.println("Winner: pattern " + win);
+        int newGame = JOptionPane.showConfirmDialog(null, "Play again?", "Game Over", JOptionPane.YES_NO_OPTION);
+        if (newGame == JOptionPane.YES_OPTION) {
+            resetGame();
+        } else {
+            System.exit(0);
+        }
+    }
+
+    public static void resetGame() {
+        for (JButton s : spaces) {
+            s.setText(" ");
+        }
+        turn = 0;
+    }
+
+    /*private static void initWins(int cols, int rows) {
+        *//*
          * Winning patterns are horizontal rows, vertical columns, and the two diagonals.
-         */
+         *//*
         int patterns = cols + rows + 2;
-        wins = new int[patterns][cols][rows];
+        //wins = new int[patterns][cols][rows];
         // Columns
         int winIn = 0;
         for (int i = 0; i < cols; i++) {
@@ -116,4 +162,5 @@ public class Board {
         }
         System.out.println();
     }
+    */
 }
