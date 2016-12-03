@@ -13,7 +13,6 @@ public class Board {
 
     private static JButton spaces[];
     private static int turn = 0;
-    private static Color background = new Color(255, 255, 255);
 
     Board(String title, int width, int height) {
         JFrame jf = new JFrame(title);
@@ -21,7 +20,6 @@ public class Board {
 
         JPanel jp = new JPanel();
         jp.setLayout(new GridLayout(width, height));
-        //jp.setBorder(BorderFactory.createLineBorder(Color.blue, 3));
         spaces = new JButton[width * height];
         for (int i = 0; i < width * height; i++) {
             spaces[i] = new TTTButton();
@@ -37,10 +35,8 @@ public class Board {
 
         public TTTButton() {
             super();
-            setBackground(background);
+            setForeground(Color.BLACK);
             setOpaque(true);
-            //setBorderPainted(false);
-            //setBorder(null);
             setFont(new Font("Helvetica", Font.PLAIN, 60));
             setText(" ");
             addActionListener(this);
@@ -54,7 +50,7 @@ public class Board {
                 setText("O");
             }
             if (checkForWin()) {
-                // XXX - Do something sensible.
+                playAgain();
             } else {
                 turn++;
                 if (turn >= spaces.length) {
@@ -82,7 +78,6 @@ public class Board {
                     ) {
                 haveWin = true;
                 showWin(i);
-                playAgain();
             }
         }
         return haveWin;
@@ -91,7 +86,7 @@ public class Board {
     private static void showWin(int win) {
         System.out.println("Winner: pattern " + win);
         for (int i : wins[win]) {
-            spaces[i].setBackground(Color.RED);
+            spaces[i].setForeground(Color.RED);
         }
     }
 
@@ -107,7 +102,7 @@ public class Board {
     public static void resetGame() {
         for (JButton s : spaces) {
             s.setText(" ");
-            s.setBackground(background);
+            s.setForeground(Color.BLACK);
         }
         turn = 0;
     }
