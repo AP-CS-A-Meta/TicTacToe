@@ -21,13 +21,13 @@ public class Board {
         JPanel jp = new JPanel();
         jp.setLayout(new GridLayout(width, height));
         spaces = new JButton[width * height];
-        for (int i = 0; i < width * height; i++) {
+        for (int i = 0; i < spaces.length; i++) {
             spaces[i] = new TTTButton();
-            jp.add(spaces[i]);
+            jp.add(spaces[i]);                  // Add button to panel.
         }
-        jf.add(jp);
+        jf.add(jp);                             // Add panel to frame.
 
-        jf.setSize(width * 100, height * 100);
+        jf.pack();
         jf.setVisible(true);
     }
 
@@ -35,6 +35,7 @@ public class Board {
 
         public TTTButton() {
             super();
+            setPreferredSize(new Dimension(100, 100));
             setForeground(Color.BLACK);
             setOpaque(true);
             setFont(new Font("Helvetica", Font.PLAIN, 60));
@@ -66,6 +67,22 @@ public class Board {
             {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, // vertical wins
             {0, 4, 8}, {2, 4, 6}             // diagonal wins
     };
+
+    private static void initWins(int rows, int cols) {
+        // Winning horizontal patterns.
+        for (int i = 0; i < rows; i += cols) {
+            for (int j = 0; j < cols; j++) {
+                wins[i][j] = i + j;
+            }
+        }
+        // Winning vertical patterns.
+        for (int i = 0; i < cols; i++) {
+            for (int j = 0; j < rows; j++) {
+                wins[cols + i][j] = i + j * rows;
+            }
+        }
+        // Winning diagonal patterns.
+    }
 
     private static boolean checkForWin() {
 
