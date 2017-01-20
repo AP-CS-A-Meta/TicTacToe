@@ -68,12 +68,20 @@ public class TicTacToe {
             }
         }
 
-        // Check if someone has won the game.
+        /**
+         * Check if the game has been won.
+         *
+         * @return - True if the game has been won.
+         */
         private boolean isThereAWinner() {
             return false;
         }
 
-        // Check if there is still space to play.
+        /**
+         * Check if there is still space to play.
+         *
+         * @return - True if the game can go on.
+         */
         private boolean noPlaceLeftToPlay() {
             return false;
         }
