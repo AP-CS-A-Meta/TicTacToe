@@ -9,9 +9,9 @@ import java.awt.event.ActionListener;
  * Created by dlu on 12/2/2016.
  */
 public class TicTacToe {
-    static String xMarker = "X";
-    static String oMarker = "O";
-    static String emptySpace = " ";
+    private static String xMarker = "X";
+    private static String oMarker = "O";
+    private static String emptySpace = " ";
 
     public static void main(String[] args) {
         JButton[][] spaces;
@@ -28,7 +28,7 @@ public class TicTacToe {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 spaces[i][j] = new TTTButton();
-                jp.add(spaces[i][j]);                  // Add button to panel.
+                jp.add(spaces[i][j]);           // Add button to panel.
             }
         }
         jf.add(jp);                             // Add panel to frame.
@@ -41,7 +41,7 @@ public class TicTacToe {
 
         private static int turn = 0;
 
-        public TTTButton() {
+        private TTTButton() {
             super();
             setPreferredSize(new Dimension(100, 100));
             setForeground(Color.BLACK);
@@ -80,23 +80,29 @@ public class TicTacToe {
         /**
          * Check if there is still space to play.
          *
-         * @return - True if the game can go on.
+         * @return - False if the game can go on.
          */
         private boolean noPlaceLeftToPlay() {
             return false;
         }
 
-        // Prompt user for a new game. Else exit.
+        /**
+         * Prompt user for a new game. Else exit.
+         */
         private void shallWePlayAgain() {
             // Consider using JOptionPane().
         }
 
-        // Mark the winning moves.
+        /**
+         * Mark the winning moves.
+         */
         private void showWin() {
 
         }
 
-        // Reset the game so that it can be played again.
+        /**
+         * Reset the game so that it can be played again.
+         */
         private void newGame() {
 
         }
